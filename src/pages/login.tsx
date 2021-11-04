@@ -1,10 +1,14 @@
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { FormError } from "../component/form-error";
+import {
+  loginMutation,
+  loginMutationVariables,
+} from "../__generated__/loginMutation";
 
 const LOGIN_MUTATION = gql`
-  mutation PotatoMutation($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
+  mutation loginMutation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
       ok
       token
       error
@@ -15,6 +19,7 @@ const LOGIN_MUTATION = gql`
 interface ILoginForm {
   email: string;
   password: string;
+  resultError?: string;
 }
 
 export const Login = () => {
@@ -25,16 +30,32 @@ export const Login = () => {
     handleSubmit,
   } = useForm<ILoginForm>();
 
-  const [loginMutation] = useMutation(LOGIN_MUTATION);
+  const onCompleted = (data: loginMutation) => {
+    const {
+      login: { error, ok, token },
+    } = data;
+    if (ok) {
+      console.log(token);
+    }
+  };
+  // { data: loginMutationResult }는 타입을 설정한 게 아니라 이름만 바꿔준거다. data는 이름으로 별로다.
+  const [loginMutation, { data: loginMutationResult }] = useMutation<
+    loginMutation,
+    loginMutationVariables
+  >(LOGIN_MUTATION, {
+    onCompleted,
+  });
   const onSubmit = () => {
     const { email, password } = getValues();
     console.log(getValues());
-    // loginMutation({
-    //   variables: {
-    //     email,
-    //     password: 1212121112,
-    //   },
-    // });
+    loginMutation({
+      variables: {
+        loginInput: {
+          email,
+          password,
+        },
+      },
+    });
   };
   return (
     <div className="h-screen flex items-center justify-center bg-gray-800">
@@ -64,6 +85,9 @@ export const Login = () => {
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <button className="mt-3 btn">Log In</button>
+          {loginMutationResult?.login.error && (
+            <FormError errorMessage={loginMutationResult.login.error} />
+          )}
         </form>
       </div>
     </div>
