@@ -1,6 +1,9 @@
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { Button } from "../component/button";
 import { FormError } from "../component/form-error";
+import nuberLogo from "../images/logo.svg";
 import {
   loginMutation,
   loginMutationVariables,
@@ -26,9 +29,9 @@ export const Login = () => {
   const {
     register,
     getValues,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
-  } = useForm<ILoginForm>();
+  } = useForm<ILoginForm>({ mode: "onChange" });
 
   const onCompleted = (data: loginMutation) => {
     const {
@@ -39,44 +42,51 @@ export const Login = () => {
     }
   };
   // { data: loginMutationResult }는 타입을 설정한 게 아니라 이름만 바꿔준거다. data는 이름으로 별로다.
-  const [loginMutation, { data: loginMutationResult }] = useMutation<
+  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
     loginMutation,
     loginMutationVariables
   >(LOGIN_MUTATION, {
     onCompleted,
   });
   const onSubmit = () => {
-    const { email, password } = getValues();
-    console.log(getValues());
-    loginMutation({
-      variables: {
-        loginInput: {
-          email,
-          password,
+    if (!loading) {
+      const { email, password } = getValues();
+      console.log(getValues());
+      loginMutation({
+        variables: {
+          loginInput: {
+            email,
+            password,
+          },
         },
-      },
-    });
+      });
+    }
   };
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-800">
-      <div className="bg-white w-full max-w-lg pt-10 pb-7 rounded-lg text-center">
-        <h3 className="text-2xl text-gray-800">Log In</h3>
+    <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
+      <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
+        <img src={nuberLogo} className="w-52 mb-5" />
+        <h4 className="w-full font-medium text-left text-3xl mb-5">
+          Welcome back
+        </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid gap-3 mt-5 px-5"
+          className="grid gap-3 mt-5 w-full mb-5"
         >
           <input
-            {...register("email", { required: "Email is required" })}
+            type="email"
             placeholder="Email"
-            className="input"
+            className="input "
+            {...register("email", { required: "Email is required" })}
           />
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />
           )}
           <input
-            {...register("password", { required: "Password is required" })}
+            type="password"
             placeholder="Password"
             className="input"
+            {...register("password", { required: "Password is required" })}
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
@@ -84,11 +94,17 @@ export const Login = () => {
           {errors.password?.type === "minLength" && (
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
-          <button className="mt-3 btn">Log In</button>
+          <Button canClick={isValid} loading={loading} actionText={"Log in"} />
           {loginMutationResult?.login.error && (
             <FormError errorMessage={loginMutationResult.login.error} />
           )}
         </form>
+        <div>
+          New to Nuber?{" "}
+          <Link to="/create-account" className="text-lime-600 hover:underline">
+            Create an Account
+          </Link>
+        </div>
       </div>
     </div>
   );
