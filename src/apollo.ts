@@ -19,7 +19,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      // 로그인이 아닐때도 이 리퀘스트는 계속 요청되니 || "" 추가.
+      // 로그인 안했을때도 이 리퀘스트는 계속 요청되니 || "" 추가.
       "x-jwt": authTokenVar() || "",
     },
   };
