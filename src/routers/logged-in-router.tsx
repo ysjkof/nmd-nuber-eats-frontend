@@ -1,12 +1,12 @@
-import { gql, useQuery } from "@apollo/client";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from "react-router-dom";
+import { Header } from "../component/header";
+import { useMe } from "../hooks/useMe";
 import { Restaurants } from "../pages/client/restaurants";
-import { meQuery } from "../__generated__/meQuery";
 
 const CLientRoutes = [
   <Route path="/" exact>
@@ -14,19 +14,8 @@ const CLientRoutes = [
   </Route>,
 ];
 
-const ME_QUERY = gql`
-  query meQuery {
-    me {
-      id
-      email
-      role
-      verified
-    }
-  }
-`;
-
 export const LoggedInRouter = () => {
-  const { data, loading, error } = useQuery<meQuery>(ME_QUERY);
+  const { data, loading, error } = useMe();
   if (!data || loading || error) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -36,6 +25,9 @@ export const LoggedInRouter = () => {
   }
   return (
     <Router>
+      {/* <Header email={data.me.email} /> */}
+      {/* 만약 깊숙히 있는 컴포넌트에 프롭스를 전달해야 한다면? 아폴로 캐시를 사용하자 */}
+      <Header />
       <Switch>
         {data.me.role === "Client" && CLientRoutes}
         <Redirect to="/" />
