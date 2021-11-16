@@ -1,6 +1,6 @@
 import { gql, useApolloClient, useMutation } from "@apollo/client";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router";
 import { useMe } from "../../hooks/useMe";
 import {
