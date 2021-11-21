@@ -12,7 +12,7 @@ export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://localhost:3333/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
