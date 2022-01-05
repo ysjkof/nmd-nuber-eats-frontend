@@ -31,6 +31,7 @@ export const Header: React.FC = () => {
 };
 
 // props를 child로 전달할때 방법.
+// 컴포넌트가 너무 깊숙히 있으면 코드가 지저분하다. 아폴로 캐시는 쿼리를 요청할때 캐시에 이미 받아논 게 있으면 캐시를 사용한다. 그러니 useMe 훅을 만들어서 쿼리를 계속 요청하면 된다.
 
 // interface IHeaderProps {
 //   email: string;
