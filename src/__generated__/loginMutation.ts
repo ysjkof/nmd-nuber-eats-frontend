@@ -8,12 +8,14 @@ import { LoginInput } from "./globalTypes";
 // ====================================================
 // GraphQL mutation operation: loginMutation
 // ====================================================
+
 export interface loginMutation_login {
   __typename: "LoginOutput";
   ok: boolean;
   token: string | null;
   error: string | null;
 }
+
 export interface loginMutation {
   login: loginMutation_login;
 }
