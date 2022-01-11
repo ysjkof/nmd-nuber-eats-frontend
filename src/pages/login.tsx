@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { authTokenVar, isLoggedInVar } from "../apollo";
-import { Button } from "../component/button";
-import { FormError } from "../component/form-error";
+import { Button } from "../components/button";
+import { FormError } from "../components/form-error";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import nuberLogo from "../images/logo.svg";
 import {
