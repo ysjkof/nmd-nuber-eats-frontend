@@ -68,18 +68,18 @@ export const Login = () => {
     }
   };
   return (
-    <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
+    <div className="mt-10 flex h-screen flex-col items-center lg:mt-28">
       <Helmet>
         <title>Login | Nuber eats</title>
       </Helmet>
-      <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img alt="Nuber Eats" src={nuberLogo} className="w-52 mb-5" />
-        <h4 className="w-full font-medium text-left text-3xl mb-5">
+      <div className="flex w-full max-w-screen-sm flex-col items-center px-5">
+        <img alt="Nuber Eats" src={nuberLogo} className="mb-5 w-52" />
+        <h4 className="mb-5 w-full text-left text-3xl font-medium">
           Welcome back
         </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid gap-3 mt-5 w-full mb-5"
+          className="mt-5 mb-5 grid w-full gap-3"
         >
           <input
             type="email"

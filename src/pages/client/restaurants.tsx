@@ -67,33 +67,33 @@ export const Restaurants = () => {
       </Helmet>
       <form
         onSubmit={handleSubmit(onSearchSubmit)}
-        className="bg-gray-800 w-full py-40 flex items-center justify-center"
+        className="flex w-full items-center justify-center bg-gray-800 py-40"
       >
         <input
           {...register("searchTerm", { required: true, min: 3 })}
           type="Search"
-          className="input rounded-md border-0 w-3/4 md:w-3/12"
+          className="input w-3/4 rounded-md border-0 md:w-3/12"
           placeholder="Search restaurants..."
         />
       </form>
       {!loading && (
-        <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
-          <div className="flex justify-around max-w-sm mx-auto ">
+        <div className="mx-auto mt-8 max-w-screen-2xl pb-20">
+          <div className="mx-auto flex max-w-sm justify-around ">
             {data?.allCategories.categories?.map((category) => (
               <Link key={category.id} to={`/category/${category.slug}`}>
-                <div className="flex flex-col group items-center cursor-pointer">
+                <div className="group flex cursor-pointer flex-col items-center">
                   <div
-                    className=" w-16 h-16 bg-cover group-hover:bg-gray-100 rounded-full"
+                    className=" h-16 w-16 rounded-full bg-cover group-hover:bg-gray-100"
                     style={{ backgroundImage: `url(${category.coverImg})` }}
                   ></div>
-                  <span className="mt-1 text-sm text-center font-medium">
+                  <span className="mt-1 text-center text-sm font-medium">
                     {category.name}
                   </span>
                 </div>
               </Link>
             ))}
           </div>
-          <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
+          <div className="mt-16 grid gap-x-5 gap-y-10 md:grid-cols-3">
             {data?.restaurants.results?.map((restaurant) => (
               <Restaurant
                 key={restaurant.id}
@@ -104,11 +104,11 @@ export const Restaurants = () => {
               />
             ))}
           </div>
-          <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
+          <div className="mx-auto mt-10 grid max-w-md grid-cols-3 items-center text-center">
             {page > 1 ? (
               <button
                 onClick={onPrevPageClick}
-                className="focus:outline-none font-medium text-2xl"
+                className="text-2xl font-medium focus:outline-none"
               >
                 &larr;
               </button>
@@ -121,7 +121,7 @@ export const Restaurants = () => {
             {page !== data?.restaurants.totalPages ? (
               <button
                 onClick={onNextPageClick}
-                className="focus:outline-none font-medium text-2xl"
+                className="text-2xl font-medium focus:outline-none"
               >
                 &rarr;
               </button>
