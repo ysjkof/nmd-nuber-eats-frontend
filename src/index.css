@@ -5,4 +5,12 @@
   @apply border-2 border-gray-200 p-3 text-lg font-light transition-colors focus:border-gray-500 focus:outline-none;
 }
 
+.container {
+  @apply mx-auto max-w-screen-2xl;
+}
+
+.link {
+  @apply text-lime-600 hover:underline;
+}
+
 @tailwind utilities;
