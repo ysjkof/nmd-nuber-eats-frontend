@@ -6,7 +6,7 @@ import App from "./App";
 import { HelmetProvider } from "react-helmet-async";
 
 import reportWebVitals from "./reportWebVitals";
-import "./styles/styles.css";
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
