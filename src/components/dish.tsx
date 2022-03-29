@@ -1,22 +1,33 @@
-import { myRestaurant_myRestaurant_restaurant_menu_options } from "../__generated__/myRestaurant";
+import { restaurant_restaurant_restaurant_menu_options } from "../__generated__/restaurant";
 
 interface IDishProps {
+  id?: number;
   description: string;
   name: string;
   price: number;
   isCustomer?: boolean;
-  options?: myRestaurant_myRestaurant_restaurant_menu_options[] | null;
+  orderStarted?: boolean;
+  options?: restaurant_restaurant_restaurant_menu_options[] | null;
+  addItemToOrder?: (dishId: number) => void;
 }
 
 export const Dish: React.FC<IDishProps> = ({
+  id = 0,
   description,
   name,
   price,
   isCustomer = false,
+  orderStarted = false,
   options,
+  addItemToOrder,
 }) => {
   return (
-    <div className=" cursor-pointer border px-8 py-4 transition-all hover:border-gray-800 ">
+    <div
+      onClick={() =>
+        orderStarted && addItemToOrder ? addItemToOrder(id) : null
+      }
+      className=" cursor-pointer border px-8 py-4 transition-all hover:border-gray-800 "
+    >
       <div className="mb-5">
         <h3 className="text-lg font-medium ">{name}</h3>
         <h4 className="font-medium">{description}</h4>
