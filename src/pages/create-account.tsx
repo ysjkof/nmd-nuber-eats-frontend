@@ -30,9 +30,8 @@ export const CreateAccount = () => {
     register,
     getValues,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
-    formState,
   } = useForm<ICreateAccountForm>({
     mode: "onChange",
     defaultValues: {
@@ -46,8 +45,8 @@ export const CreateAccount = () => {
       createAccount: { ok, error },
     } = data;
     if (ok) {
-      alert("Account Created! Log in now!");
-      history.push("/");
+      // alert("Account Created! Log in now!");
+      // history.push("/");
     }
   };
   const [
@@ -116,7 +115,7 @@ export const CreateAccount = () => {
             ))}
           </select>
           <Button
-            canClick={formState.isValid}
+            canClick={isValid}
             loading={loading}
             actionText={"Create Account"}
           />
